@@ -10,7 +10,7 @@ function classNames(...classes) {
 
 export default function Registration() {
   const [agreed, setAgreed] = useState(false);
-  const url = "http://localhost:3000/signup/create"
+  const url = "http://localhost:3001/api/v1/users"
   const [data, setData] = useState({
     name: "",
     lastName: "",
@@ -32,6 +32,8 @@ export default function Registration() {
       lastName: data.lastName,
       email:data.email,
       password:data.password
+    }).then(res => {
+      console.log(res.data)
     })
   }
 
