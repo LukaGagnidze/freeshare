@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
-import axios from "axios"
+import axios from "axios";
 import NavBar from "../Reusable Components/NavBar";
 import NavBarSignedIn from "../Reusable Components/NavBarSignedIn";
 
@@ -10,7 +10,7 @@ function classNames(...classes) {
 
 export default function Registration() {
   const [agreed, setAgreed] = useState(false);
-  const url = "http://localhost:3001/api/v1/users"
+  const url = "http://localhost:3001/signup";
   const [data, setData] = useState({
     name: "",
     lastName: "",
@@ -21,20 +21,23 @@ export default function Registration() {
   function handle(e) {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
-    setData(newData)
-    console.log(newData)
+    setData(newData);
+    console.log(newData);
   }
 
   function submit(e) {
     e.preventDefault();
-    axios.post(url,{
-      name: data.name,
-      lastName: data.lastName,
-      email:data.email,
-      password:data.password
-    }).then(res => {
-      console.log(res.data)
-    })
+    axios({
+      method: "post",
+      data: {
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
+      },
+      withCredentials: true,
+      url: url,
+    }).then((res) => console.log(res));
   }
 
   return (
@@ -115,9 +118,7 @@ export default function Registration() {
           </div>
           <div className="mt-12">
             <form
-            onSubmit={(e)=>submit(e)}
-              action="/signup/create"
-              method="POST"
+              onSubmit={(e) => submit(e)}
               className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
             >
               <div>
